@@ -66,3 +66,13 @@ yarn run test:e2e
 ```sh
 yarn run lint
 ```
+
+# Get started
+Click on link to see (https://main--glittery-malasada-c2af0f.netlify.app/#/)
+
+
+## Routes
+UI Challenge - https://main--glittery-malasada-c2af0f.netlify.app/#/cards
+Code Challenge - https://main--glittery-malasada-c2af0f.netlify.app/#/credits
+
+Note: Please reload page when you navigate to /cards page
