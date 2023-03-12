@@ -62,6 +62,7 @@ import { useUsers } from 'src/services/users'
 import { useUserStore } from 'src/stores/store-user'
 import { offset } from 'dom7'
 import router from "@/router";
+import { IUsers } from 'src/models/users'
 
 const { addNewUsers } = useUsers()
 const { setUser } = useUserStore()
@@ -83,27 +84,29 @@ const submitForm = async () => {
   isLoading.value = true;
 
   try {
+    
     const result = await addNewUsers({
       email: email.value,
       password: password.value
     })
 
-    if (result === 'This account has already been added') {
+    if (result === 'This account has already been added' && mode.value === 'login') {
       Notify.create({
         message: result,
         type: 'info'
       });
-
+      router.replace({ name: 'Card' });
     } else {
-      setUser(result);
+      setUser(result as IUsers[]);
       mode.value = 'signup';
       Notify.create({
         message: 'Your account has successfully added',
         type: 'positive'
       })
     };
+    
     isLoading.value = false;
-    router.replace({ name: 'Card' });
+
   } catch (err: any) {
     console.log(err.message, "error")
     error.value = err.message || "Failed to authenticate."

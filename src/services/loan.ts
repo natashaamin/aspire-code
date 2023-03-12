@@ -16,6 +16,7 @@ export const useLoanTransactionApi = () => {
         myLoan = loans
         saveLoanTransactionToLocalStorage(loans)
       }
+      myLoan = myLoan.filter((loan) => loan.loanId != 0);
       resolve(myLoan)
     })
   }
@@ -32,15 +33,21 @@ export const useLoanTransactionApi = () => {
     return getLoans
   }
 
-  const updateLoan = async (id: string, data: Partial<ILoans>) => {
+  const updateLoan = async (id: any, data: Partial<ILoans>) => {
     const loans = [...(await getLoanList())]
+    console.log(loans,"hello")
     const cardToUpdateIdx = loans.findIndex((loan) => loan.loanId === id)
-    if (cardToUpdateIdx > -1) {
-      loans[cardToUpdateIdx] = {
-        ...loans[cardToUpdateIdx],
+    console.log(cardToUpdateIdx,"hello")
+
+    if (cardToUpdateIdx == -1) {
+      loans[id] = {
+        ...loans[id],
         ...data,
       }
-      saveLoanTransactionToLocalStorage(loans)
+      console.log(loans,"ppp")
+      console.log(data  ,"ppp")
+
+      saveLoanTransactionToLocalStorage(data)
     } else {
       return 'This card is not available now. Please try again later.'
     }

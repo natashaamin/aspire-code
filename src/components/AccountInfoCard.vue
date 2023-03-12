@@ -1,13 +1,4 @@
 <template>
-  <div class="view-card-page-desktop__top-section">
-    <div class="view-card-page-desktop__top-section__user-balance">
-      <div class="view-card-page-desktop__top-section__user-balance__add-new-card">
-        <logo class="view-card-page-desktop__top-section__user-balance__add-new-card__logo" />
-        <add-new-loan-btn @click="emit('add-new-loan')" :title="'New Loan'" />
-      </div>
-    </div>
-  </div>
-
   <div class="account__info-card">
     <div class="personal__details">
       <div class="account__avatar">
@@ -31,19 +22,17 @@
 
     <div class="account__detail-cards">
       <div class="detail-card">
-        <div class="label text-bold">
-          Loan amount
-          <Tick
-            v-if="loanAmount !== 0 && loanPaid == loanAmount"
-            height="20"
-            class="bg-green-3 q-ml-md"
-            style="border-radius: 50%"
-          />
-        </div>
+        <div class="label text-bold">Loan amount</div>
 
         <div class="card-row">
           <div class="icon q-mt-md">
-            <ViewCard />
+            <Tick
+              v-if="loanAmount !== 0 && loanPaid == loanAmount"
+              height="24"
+              fill="#000000"
+            />
+
+            <ViewCard v-else />
           </div>
           <div class="q-ml-md">
             <span class="text-h6 amt-text"> S$ {{ loanAmount ? loanAmount : '- - -' }}</span>
@@ -91,13 +80,11 @@ import { computed, ref, onMounted, watch } from 'vue'
 
 const { $state, setLoanDetails } = useLoanStore()
 
-const loanAmount = ref(0)
-const loanTerms = ref(0)
-const loanPaid = ref(0)
-const loanRemain = ref(0)
-const status = ref('')
-
-const emit = defineEmits<{ (event: 'add-new-loan'): void }>()
+const loanAmount = ref<any>(0)
+const loanTerms = ref<any>(0)
+const loanPaid = ref<any>(0)
+const loanRemain = ref<any>(0)
+const status = ref<any>('')
 
 const loansDetails = computed({
   get() {
@@ -129,6 +116,7 @@ watch(
   () => loansDetails.value,
   (value) => {
     if (value.length > 0) {
+      console.log(value, 'hello p')
       value.map((val) => {
         loanAmount.value = val.loanAmount
         loanTerms.value = val.loanTerms
@@ -161,24 +149,6 @@ getStatus()
 </script>
 
 <style lang="scss" scoped>
-.view-card-page-desktop {
-  @apply p-60px pb-89.5px;
-
-  &__top-section {
-    &__user-balance {
-      @apply flex flex-nowrap justify-between items-end mb-26px lg: mb-9;
-
-      &__add-new-card {
-        @apply flex flex-col;
-
-        &__logo {
-          @apply text-brand relative -top-25px self-end;
-        }
-      }
-    }
-  }
-}
-
 .vertical-line {
   border-left: 1px solid black;
   height: 300px; /* Change the height to adjust the length of the line */

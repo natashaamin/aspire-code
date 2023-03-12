@@ -10,7 +10,6 @@
       @add-new-card="addNewCardDialogIsOpened = true"
       :my-cards="myCards"
     />
-    <add-new-card-dialog v-model="addNewCardDialogIsOpened" />
   </div>
 </template>
 
@@ -18,7 +17,6 @@
 import { computed, ref, watch } from 'vue';
 import TheMobileCardsPage from 'src/views/MobileCardView.vue'
 import TheDesktopCardsPage from 'src/views/DesktopCardView.vue'
-import AddNewCardDialog from 'src/components/AddNewCardDialog.vue';
 import { useMyCardsStore } from 'src/stores/store-card';
 const { $state, loadCards, loadTransactions } = useMyCardsStore()
 const addNewCardDialogIsOpened = ref(false);

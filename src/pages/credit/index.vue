@@ -1,8 +1,8 @@
 <template>
   <q-layout class="q-pa-lg">
-    <account-info-card @add-new-loan="toggleDialog = true"></account-info-card>
+    <account-info-card ></account-info-card>
     <add-new-loan-dialog v-model="toggleDialog" />
-    <loan-transaction :loan-is-approved="isLoanApprovedRef"></loan-transaction>
+    <loan-transaction :loan-is-approved="isLoanApprovedRef" @add-new-loan="toggleDialog = true"></loan-transaction>
   </q-layout>
 </template>
 
@@ -24,6 +24,12 @@ const isLoanApprovedRef = ref(false)
 
 const isLoanApproved = computed(() => $state.isLoanApproved)
 watch(() => isLoanApproved.value, (value) => { isLoanApprovedRef.value = value })
+
+const loan = computed(() => $state.loans)
+
+watch(() => loan.value, (value)=> {
+  console.log(value, 'meow')
+})
 
 loadLoans()
 </script>

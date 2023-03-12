@@ -22,15 +22,15 @@ export const useLoanStore = defineStore('loan-store', () => {
     isLoanApproved.value = status
   }
 
-  const updateLoanDetails = (id: any, loanRemain: any, loanPaid: any) => {
+  const updateLoanDetails = async (id: any, loanRemain: any, loanPaid: any) => {
     const updatedArray = loans.value.map(item => item.loanId === id ? { ...item, loanRemain: loanRemain, loanPaid: loanPaid } : item);
-    console.log(updatedArray,"hello")
     if (updatedArray) {
-      updateLoan(id, updatedArray as any)
+     await updateLoan(id, updatedArray as any)
       Notify.create({
         message: 'Your details have been updated.',
         type: 'positive'
-      })
+      });
+      return updatedArray;
     } else {
       Notify.create({
         message: 'Unable to update.',
